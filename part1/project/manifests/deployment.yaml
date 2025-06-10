@@ -14,4 +14,7 @@ spec:
     spec:
       containers:
       - name: dwk-project
-        image: jayzstep/dwk-project:v0.3
+        image: jayzstep/dwk-project:v0.4
+        env:
+        - name: PORT
+          value: "3000"

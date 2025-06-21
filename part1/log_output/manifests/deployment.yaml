@@ -6,12 +6,23 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: log-output
+      app: log-output-duo
   template:
     metadata:
       labels:
-        app: log-output
+        app: log-output-duo
     spec:
+      volumes:
+        - name: shared-log
+          emptyDir: {}
       containers:
-        - name: log-output
-          image: jayzstep/log-output:v0.2
+        - name: log-output-writer
+          image: jayzstep/log-output:v0.3
+          volumeMounts:
+            - name: shared-log
+              mountPath: /usr/src/app/files
+        - name: log-output-reader
+          image: jayzstep/log-output:v0.3
+          volumeMounts:
+            - name: shared-log
+              mountPath: /usr/src/app/files

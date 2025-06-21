@@ -9,3 +9,4 @@
 - [1.4](https://github.com/jayzstep/kube/tree/1.4/part1/project)
 - [1.5 ja 1.6](https://github.com/jayzstep/kube/tree/1.6/part1/project)
 - [1.7](https://github.com/jayzstep/kube/tree/1.7/part1/log_output)
+- [1.8](https://github.com/jayzstep/kube/tree/1.8/part1/project)

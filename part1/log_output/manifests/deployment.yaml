@@ -13,16 +13,17 @@ spec:
         app: log-output-duo
     spec:
       volumes:
-        - name: shared-log
-          emptyDir: {}
+        - name: shared-logs
+          persistentVolumeClaim:
+            claimName: shared-files-claim
       containers:
         - name: log-output-writer
-          image: jayzstep/log-output:v0.3
+          image: jayzstep/log-output:v0.4
           volumeMounts:
-            - name: shared-log
+            - name: shared-logs
               mountPath: /usr/src/app/files
         - name: log-output-reader
-          image: jayzstep/log-output:v0.3
+          image: jayzstep/log-output:v0.4
           volumeMounts:
-            - name: shared-log
+            - name: shared-logs
               mountPath: /usr/src/app/files

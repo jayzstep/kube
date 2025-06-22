@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: shared-pv
+spec:
+  storageClassName: shared-pv # tällä nimellä vaaditaan volyymia
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem # näkyy hakemistona podeille
+  accessModes:
+    - ReadWriteOnce
+  local:
+    path: /tmp/kube
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - k3d-k3s-default-agent-0

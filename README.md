@@ -1,6 +1,5 @@
 # kube
 
-
 ## part 1
 
 - [1.1](https://github.com/jayzstep/kube/tree/1.1/part1/log_output)
@@ -12,3 +11,4 @@
 - [1.8](https://github.com/jayzstep/kube/tree/1.8/part1/project)
 - [1.9](https://github.com/jayzstep/kube/tree/1.9/part1)
 - [1.10](https://github.com/jayzstep/kube/tree/1.10/part1/log_output)
+- [1.11](https://github.com/jayzstep/kube/tree/1.11/part1)

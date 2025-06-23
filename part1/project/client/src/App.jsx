@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import Todo from './Todo'
-import './App.css'
 
 const App = () => {
   const [todos, setTodos] = useState([])
@@ -26,23 +25,23 @@ const App = () => {
     }
   }
 
-  if (loading) return <div className="loading">Loading todos...</div>
-  if (error) return <div className="error">Error: {error}</div>
+  if (loading) return <div>Loading todos...</div>
+  if (error) return <div>Error: {error}</div>
 
   return (
-    <div className="app">
-      <header className="app-header">
+    <div>
+      <header>
         <h1>Todo App</h1>
         <p>DevOps with Kubernetes Project</p>
       </header>
       
-      <main className="app-main">
-        <div className="todos-container">
+      <main>
+        <div>
           <h2>My Todos ({todos.length})</h2>
           {todos.length === 0 ? (
-            <p className="no-todos">No todos found</p>
+            <p>No todos found</p>
           ) : (
-            <div className="todos-list">
+            <div>
               {todos.map(todo => (
                 <Todo key={todo.id} todo={todo} />
               ))}

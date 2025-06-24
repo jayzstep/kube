@@ -5,7 +5,7 @@ metadata:
 spec:
   storageClassName: shared-pv # tällä nimellä vaaditaan volyymia
   capacity:
-    storage: 1Gi
+    storage: 2Gi
   volumeMode: Filesystem # näkyy hakemistona podeille
   accessModes:
     - ReadWriteOnce

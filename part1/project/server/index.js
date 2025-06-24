@@ -6,11 +6,13 @@ const path = require('path')
 const app = express()
 
 const PORT = process.env.PORT || 3000
+const TENMINUTES = 10 * 60 * 1000
 
 app.use(express.static(path.join(__dirname, 'build')))
 
 const directory = path.join('/', 'usr', 'src', 'app', 'files')
 const photoFilePath = path.join(directory, 'pic.jpg')
+const lastUpdatedFilePath = path.join(directory, 'updated.txt')
 
 if (!fs.existsSync(directory)) {
   fs.mkdirSync(directory, { recursive: true })
@@ -23,12 +25,18 @@ const initPicture = async () => {
     pic = fs.readFileSync(photoFilePath)
   } catch (error) {
     console.log('no picture found, getting one from the internet')
-    const response = await axios.get('https://picsum.photos/1200', {
-      responseType: 'arraybuffer'
-    })
-    fs.writeFileSync(photoFilePath, response.data)
-    pic = response.data
+    updatePicture()
   }
+}
+
+const updatePicture = async () => {
+  const response = await axios.get('https://picsum.photos/200', {
+    responseType: 'arraybuffer'
+  })
+  const timeStamp = Date.now()
+  fs.writeFileSync(photoFilePath, response.data)
+  fs.writeFileSync(lastUpdatedFilePath, timeStamp.toString())
+  pic = response.data
 }
 
 initPicture()
@@ -67,6 +75,10 @@ app.get('/api/picture', (req, res) => {
   }
   res.set('Content-Type', 'image/jpeg')
   res.send(pic)
+  const lastUpdated = fs.readFileSync(lastUpdatedFilePath)
+  if (Date.now() - parseInt(lastUpdated, 10) > TENMINUTES) {
+    updatePicture()
+  }
 })
 
 app.listen(PORT, () => {

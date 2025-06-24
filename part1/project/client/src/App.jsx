@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { useState, useEffect } from 'react'
 import Todo from './Todo'
 
@@ -12,12 +13,8 @@ const App = () => {
 
   const fetchTodos = async () => {
     try {
-      const response = await fetch('/api/todos')
-      if (!response.ok) {
-        throw new Error('Failed to fetch todos')
-      }
-      const data = await response.json()
-      setTodos(data)
+      const response = await axios.get('/api/todos')
+      setTodos(response.data)
     } catch (err) {
       setError(err.message)
     } finally {
@@ -31,10 +28,11 @@ const App = () => {
   return (
     <div>
       <header>
+        <img src="/api/picture" alt="random picture" />
         <h1>Todo App</h1>
         <p>DevOps with Kubernetes Project</p>
       </header>
-      
+
       <main>
         <div>
           <h2>My Todos ({todos.length})</h2>

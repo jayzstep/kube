@@ -6,6 +6,7 @@ const App = () => {
   const [todos, setTodos] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [newTodo, setNewTodo] = useState('')
 
   useEffect(() => {
     fetchTodos()
@@ -19,6 +20,22 @@ const App = () => {
       setError(err.message)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleAddTodo = async event => {
+    event.preventDefault()
+    if (newTodo.length > 140) {
+      setError('Todo cannot be longer than 140 characters')
+      return
+    }
+    try {
+      const response = await axios.post('/api/todos', { data: newTodo })
+      setNewTodo('')
+      setTodos(todos.concat(response.data))
+      setError(null)
+    } catch (err) {
+      setError(err.message)
     }
   }
 
@@ -46,6 +63,16 @@ const App = () => {
             </div>
           )}
         </div>
+        <form onSubmit={handleAddTodo}>
+          <input
+            onChange={({ target }) => setNewTodo(target.value)}
+            value={newTodo}
+            maxLength="140"
+            placeholder="Enter todo (max 140 characters)"
+          />
+          <span>{newTodo.length}/140</span>
+          <button type="submit">Create todo</button>
+        </form>
       </main>
     </div>
   )

@@ -41,6 +41,8 @@ const updatePicture = async () => {
 
 initPicture()
 
+const genId = () => Math.floor(Math.random() * 1000000)
+
 const todos = [
   {
     id: 1,
@@ -67,6 +69,21 @@ app.use(express.json())
 
 app.get('/api/todos', (req, res) => {
   res.json(todos)
+})
+
+app.post('/api/todos', (req, res) => {
+  if (!req.body.data || req.body.data.length > 140) {
+    return res.status(400).json({ error: 'Todo text is required and cannot be longer than 140 characters' })
+  }
+  
+  const newTodo = {
+    id: genId(),
+    text: req.body.data,
+    completed: false,
+    createdAt: new Date().toISOString()
+  }
+  todos.push(newTodo)
+  res.status(201).json(newTodo)
 })
 
 app.get('/api/picture', (req, res) => {

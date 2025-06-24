@@ -12,9 +12,16 @@ spec:
       labels:
         app: dwk-project
     spec:
+      volumes:
+        - name: project-files
+          persistentVolumeClaim:
+            claimName: shared-files-claim
       containers:
-      - name: dwk-project
-        image: jayzstep/dwk-project:v0.4
-        env:
-        - name: PORT
-          value: "3000"
+        - name: dwk-project
+          image: jayzstep/dwk-project:v0.5
+          env:
+            - name: PORT
+              value: '3000'
+          volumeMounts:
+            - name: project-files
+              mountPath: /usr/src/app/files

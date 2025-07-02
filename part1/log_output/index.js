@@ -1,5 +1,6 @@
 const path = require('path')
 const fs = require('fs')
+const axios = require('axios')
 
 const express = require('express')
 
@@ -9,7 +10,6 @@ const port = process.env.PORT || 3000
 
 const directory = path.join('/', 'usr', 'src', 'app', 'files')
 const logFilePath = path.join(directory, 'log.txt')
-const counterFilePath = path.join(directory, 'counter.txt')
 
 const logMessage = () => {
   const timestamp = new Date().toISOString()
@@ -23,14 +23,16 @@ const logMessage = () => {
   fs.writeFileSync(logFilePath, message)
 }
 
-app.get('/status', (req, res) => {
+app.use(express.json())
+
+app.get('/status', async (req, res) => {
   try {
     const log = fs.readFileSync(logFilePath, 'utf8')
-    const counter = fs.readFileSync(counterFilePath, 'utf8')
-    const finalMessage = `${log}.\n Ping / Pongs: ${counter}`
+    const response = await axios.get('http://ping-pong-svc:2345/pings')
+    const finalMessage = `${log}.\n Ping / Pongs: ${response.data.counter}`
     res.send(finalMessage)
   } catch (error) {
-    res.status(500).send('Error reading file.', error)
+    res.status(500).send('Something went wrong: ', error)
   }
 })
 

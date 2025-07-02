@@ -26,6 +26,14 @@ app.get('/pingpong', (req, res) => {
   res.send(`pong ${counter}`)
 })
 
+app.get('/pings', (req, res) => {
+  counter += 1
+  fs.writeFileSync(filePath, counter.toString())
+  res.json({
+    counter
+  })
+})
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)
 })

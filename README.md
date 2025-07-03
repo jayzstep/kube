@@ -18,3 +18,4 @@
 ## part 2
 
 - [2.1](https://github.com/jayzstep/kube/tree/2.1/part1)
+- [2.2](https://github.com/jayzstep/kube/tree/2.2/part1)

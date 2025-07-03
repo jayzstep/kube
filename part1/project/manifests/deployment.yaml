@@ -18,7 +18,7 @@ spec:
             claimName: shared-files-claim
       containers:
         - name: dwk-project
-          image: jayzstep/dwk-project:v0.6
+          image: jayzstep/dwk-project:v0.9
           env:
             - name: PORT
               value: '3000'

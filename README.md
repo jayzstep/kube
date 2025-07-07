@@ -20,3 +20,4 @@
 - [2.1](https://github.com/jayzstep/kube/tree/2.1/part1)
 - [2.2](https://github.com/jayzstep/kube/tree/2.2/part1)
 - [2.3](https://github.com/jayzstep/kube/tree/2.3/part1)
+- [2.4](https://github.com/jayzstep/kube/tree/2.4/part1)

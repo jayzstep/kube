@@ -28,7 +28,9 @@ app.use(express.json())
 app.get('/status', async (req, res) => {
   try {
     const log = fs.readFileSync(logFilePath, 'utf8')
-    const response = await axios.get('http://ping-pong-svc:2345/pings')
+    const response = await axios.get(
+      'http://ping-pong-svc.exercises:2345/pings'
+    )
     const finalMessage = `${log}.\n Ping / Pongs: ${response.data.counter}`
     res.send(finalMessage)
   } catch (error) {

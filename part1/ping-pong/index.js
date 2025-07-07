@@ -5,11 +5,12 @@ const express = require('express')
 const directory = path.join('/', 'usr', 'src', 'app', 'files')
 const filePath = path.join(directory, 'counter.txt')
 
-if (!fs.existsSync(directory)) {
-  fs.mkdirSync(directory, { recursive: true })
-}
-
 let counter = 0
+
+if (!fs.existsSync(filePath)) {
+  fs.mkdirSync(directory, { recursive: true })
+  fs.writeFileSync(filePath, counter.toString())
+}
 
 try {
   counter = Number(fs.readFileSync(filePath, 'utf8'))

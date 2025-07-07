@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: exercises
   name: ping-pong-dep
 spec:
   replicas: 1
@@ -15,10 +16,10 @@ spec:
       volumes:
         - name: shared-logs
           persistentVolumeClaim:
-            claimName: shared-files-claim
+            claimName: exercises-shared-files-claim
       containers:
         - name: ping-pong
-          image: jayzstep/ping-pong:v0.7
+          image: jayzstep/ping-pong:v0.8
           volumeMounts:
             - name: shared-logs
               mountPath: /usr/src/app/files

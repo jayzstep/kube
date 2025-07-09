@@ -17,9 +17,20 @@ spec:
         - name: shared-logs
           persistentVolumeClaim:
             claimName: exercises-shared-files-claim
+        - name: configmap-volume
+          configMap:
+            name: log-output-configmap
       containers:
         - name: log-output
-          image: jayzstep/log-output:v0.8
+          image: jayzstep/log-output:v0.9
           volumeMounts:
             - name: shared-logs
               mountPath: /usr/src/app/files
+            - name: configmap-volume
+              mountPath: /usr/src/app/config
+          env:
+            - name: MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: log-output-configmap
+                  key: message

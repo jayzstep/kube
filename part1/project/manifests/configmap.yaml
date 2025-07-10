@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: project
+  name: project-config
+data:
+  port: '3000'
+  pic_url: 'http://picsum.photos/200'
+  update_interval: '6000000' # 10 minutes

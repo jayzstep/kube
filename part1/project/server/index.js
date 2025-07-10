@@ -6,7 +6,9 @@ const path = require('path')
 const app = express()
 
 const PORT = process.env.PORT || 3000
-const TENMINUTES = 10 * 60 * 1000
+const UPDATE_INTERVAL =
+  parseInt(process.env.UPDATE_INTERVAL, 10) || 10 * 60 * 1000
+const PIC_URL = process.env.PIC_URL || 'https://picsum.photos/200'
 
 app.use(express.static(path.join(__dirname, 'build')))
 
@@ -30,7 +32,7 @@ const initPicture = async () => {
 }
 
 const updatePicture = async () => {
-  const response = await axios.get('https://picsum.photos/200', {
+  const response = await axios.get(PIC_URL, {
     responseType: 'arraybuffer'
   })
   const timeStamp = Date.now()
@@ -51,7 +53,7 @@ app.get('/api/picture', (req, res) => {
   res.set('Content-Type', 'image/jpeg')
   res.send(pic)
   const lastUpdated = fs.readFileSync(lastUpdatedFilePath)
-  if (Date.now() - parseInt(lastUpdated, 10) > TENMINUTES) {
+  if (Date.now() - parseInt(lastUpdated, 10) > UPDATE_INTERVAL) {
     updatePicture()
   }
 })

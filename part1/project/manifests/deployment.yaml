@@ -19,10 +19,23 @@ spec:
             claimName: shared-files-claim
       containers:
         - name: dwk-project
-          image: jayzstep/dwk-project:v0.9
+          image: jayzstep/dwk-project:v0.10
           env:
             - name: PORT
-              value: '3000'
+              valueFrom:
+                configMapKeyRef:
+                  name: project-config
+                  key: port
+            - name: PIC_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: project-config
+                  key: pic_url
+            - name: UPDATE_INTERVAL
+              valueFrom:
+                configMapKeyRef:
+                  name: project-config
+                  key: update_interval
           volumeMounts:
             - name: project-files
               mountPath: /usr/src/app/files

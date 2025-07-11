@@ -19,10 +19,12 @@ spec:
             claimName: exercises-shared-files-claim
       containers:
         - name: ping-pong
-          image: jayzstep/ping-pong:v0.8
+          image: jayzstep/ping-pong:v0.10
           volumeMounts:
             - name: shared-logs
               mountPath: /usr/src/app/files
           env:
             - name: PORT
               value: '3000'
+            - name: DB_URI
+              value: postgres://postgres:siikret@postgres-svc:5432/pingpong

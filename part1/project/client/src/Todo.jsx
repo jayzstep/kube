@@ -10,7 +10,7 @@ const Todo = ({ todo }) => {
             {todo.completed ? '✅ Completed' : '⏳ Pending'}
           </span>
           <span className="todo-date">
-            {new Date(todo.createdAt).toLocaleDateString()}
+            {new Date(todo.createdat).toLocaleDateString()}
           </span>
         </div>
       </div>

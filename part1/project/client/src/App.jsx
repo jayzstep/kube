@@ -1,46 +1,27 @@
-import axios from 'axios'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Todo from './Todo'
+import { useTodos, useAddTodo } from './hooks/useTodos'
 
 const App = () => {
-  const [todos, setTodos] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
   const [newTodo, setNewTodo] = useState('')
-
-  useEffect(() => {
-    fetchTodos()
-  }, [])
-
-  const fetchTodos = async () => {
-    try {
-      const response = await axios.get('/api/todos')
-      setTodos(response.data)
-    } catch (err) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
-    }
-  }
+  const { data: todos = [], isLoading, error } = useTodos()
+  const addTodoMutation = useAddTodo()
 
   const handleAddTodo = async event => {
     event.preventDefault()
     if (newTodo.length > 140) {
-      setError('Todo cannot be longer than 140 characters')
       return
     }
     try {
-      const response = await axios.post('/api/todos', { data: newTodo })
+      await addTodoMutation.mutateAsync(newTodo)
       setNewTodo('')
-      setTodos(todos.concat(response.data))
-      setError(null)
     } catch (err) {
-      setError(err.message)
+      console.error('Failed to add todo:', err)
     }
   }
 
-  if (loading) return <div>Loading todos...</div>
-  if (error) return <div>Error: {error}</div>
+  if (isLoading) return <div>Loading todos...</div>
+  if (error) return <div>Error: {error.message}</div>
 
   return (
     <div>

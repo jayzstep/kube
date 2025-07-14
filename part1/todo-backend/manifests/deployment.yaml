@@ -15,10 +15,15 @@ spec:
     spec:
       containers:
         - name: todo-backend
-          image: jayzstep/todo-backend:v0.1
+          image: jayzstep/todo-backend:v0.2
           env:
             - name: PORT
               valueFrom:
                 configMapKeyRef:
                   name: todo-backend-config
                   key: port
+            - name: DB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: db-uri
+                  key: DB_URI

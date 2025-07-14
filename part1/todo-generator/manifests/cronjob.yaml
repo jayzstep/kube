@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  namespace: project
+  name: todo-generator-cj
+spec:
+  schedule: '0 * * * *'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: todo-generator
+              image: jayzstep/todo-generator:v0.1
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: URL
+                  value: 'http://todo-backend-svc:1234/api/todos'
+          restartPolicy: OnFailure

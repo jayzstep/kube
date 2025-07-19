@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const { Pool } = require('pg')
+const middleware = require('./utils/middleware')
 
 const app = express()
 
@@ -9,6 +10,7 @@ const pool = new Pool({ connectionString: process.env.DB_URI })
 
 app.use(cors())
 app.use(express.json())
+app.use(middleware.requestLogger)
 
 const initDatabase = async () => {
   try {

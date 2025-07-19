@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: todo-backend
-          image: jayzstep/todo-backend:v0.2
+          image: jayzstep/todo-backend:v0.5
           env:
             - name: PORT
               valueFrom:
